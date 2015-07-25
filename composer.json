@@ -1,7 +1,7 @@
 {
     "name":"markocupic/rotate_image",
     "description":"Backend extension for the Contao Open Source CMS",
-    "keywords":["contao", "rotate image", "rotate_image", "filemanager", "Backend"],
+    "keywords":["contao", "rotate", "image", "rotate image", "Bild drehen", "drehen", "Bild", "rotate_image", "filemanager", "Dateiverwaltung", "Backend"],
     "type":"contao-module",
     "license":"LGPL-3.0+",
     "authors":[
