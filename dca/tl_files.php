@@ -16,6 +16,7 @@ $GLOBALS['TL_DCA']['tl_files']['list']['operations']['rotateImage'] = array(
     'label' => &$GLOBALS['TL_LANG']['tl_files']['rotateImage'],
     'href' => 'key=rotate_image',
     'icon' => 'system/modules/mcupic_rotate_image/assets/images/arrow_rotate_clockwise.png',
+    'attributes'          => 'onclick="Backend.getScrollOffset()"',
     'button_callback' => array('tl_files_rotate_image', 'rotateImage')
 );
 
@@ -53,18 +54,16 @@ class tl_files_rotate_image extends Backend
     public function rotateImage($row, $href, $label, $title, $icon, $attributes)
     {
         $isImage = false;
-        if (is_file(TL_ROOT . '/' . $row['id']))
+        $strDecoded = rawurldecode($row['id']);
+        if (is_file(TL_ROOT . '/' . $strDecoded))
         {
-            $objFile = new File($row['id']);
+            $objFile = new File($strDecoded, true);
             if ($objFile->isGdImage)
             {
-                if(strtolower($objFile->extension) == 'jpg' || strtolower($objFile->extension) == 'jpeg')
-                {
-                    $isImage = true;
-                }
+                $isImage = true;
             }
         }
 
-        return $isImage ? '<a href="' . $this->addToUrl($href . '&amp;id=' . $row['id']) . '" title="' . specialchars($title, false, true) . '"' . $attributes . '>' . Image::getHtml($icon, $label) . '</a> ' : Image::getHtml(preg_replace('/\.png$/i', '_.png', $icon)) . ' ';
+        return $isImage==true ? '<a href="' . $this->addToUrl($href . '&amp;id=' . $row['id']) . '" title="' . specialchars($title, false, true) . '"' . $attributes . '>' . Image::getHtml($icon, $label) . '</a> ' : Image::getHtml(preg_replace('/\.png$/i', '_.png', $icon)) . ' ';
     }
 }
