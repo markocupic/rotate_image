@@ -13,8 +13,8 @@
 /**
  * Run in a custom namespace, so the class can be replaced
  */
-namespace Markocupic;
 
+namespace Markocupic;
 
 
 /**
@@ -27,8 +27,7 @@ class RotateImage extends \Backend
 
 
     /**
-     * rotate images clockwise by an angle of 90°
-     *
+     * Rotate an image clockwise by 90°
      * @return bool
      */
     public function rotateImage()
@@ -53,9 +52,6 @@ class RotateImage extends \Backend
             return false;
         }
 
-        // chmod
-        \Files::getInstance()->chmod($src, 0777);
-
         $source = imagecreatefromjpeg($src);
 
         //rotate
@@ -65,13 +61,9 @@ class RotateImage extends \Backend
         imagejpeg($imgTmp, $src);
         imagedestroy($source);
 
-        // chmod
-        \Files::getInstance()->chmod($src, 0644);
-
-        $this->redirect('contao/main.php?do=files');
+        $this->redirect($this->getReferer());
 
     }
-
 
 }
 
