@@ -13,14 +13,14 @@
 /**
  * Run in a custom namespace, so the class can be replaced
  */
-namespace MCupic;
+namespace Markocupic;
 
 
 
 /**
  * Provide methods to rotate Images.
  *
- * @author Leo Feyer <https://github.com/markocupic>
+ * @author Marko Cupic <https://github.com/markocupic>
  */
 class RotateImage extends \Backend
 {

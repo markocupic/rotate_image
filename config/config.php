@@ -12,5 +12,5 @@
 /**
  * Back end modules
  */
-$GLOBALS['BE_MOD']['system']['files']['rotate_image'] = array('MCupic\RotateImage', 'rotateImage');
+$GLOBALS['BE_MOD']['system']['files']['rotate_image'] = array('Rotateimage\RotateImage', 'rotateImage');
 

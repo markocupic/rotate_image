@@ -12,12 +12,13 @@
 /**
  * File management
  */
-$GLOBALS['TL_DCA']['tl_files']['list']['operations']['rotateImage'] = array(
-    'label' => &$GLOBALS['TL_LANG']['tl_files']['rotateImage'],
-    'href' => 'key=rotate_image',
-    'icon' => 'system/modules/rotate_image/assets/images/arrow_rotate_clockwise.png',
-    'attributes'          => 'onclick="Backend.getScrollOffset()"',
-    'button_callback' => array('tl_files_rotate_image', 'rotateImage')
+$GLOBALS['TL_DCA']['tl_files']['list']['operations']['rotateImage'] = array
+(
+    'label'             => &$GLOBALS['TL_LANG']['tl_files']['rotateImage'],
+    'href'              => 'key=rotate_image',
+    'icon'              => 'system/modules/rotate_image/assets/images/arrow_rotate_clockwise.png',
+    'attributes'        => 'onclick="Backend.getScrollOffset()"',
+    'button_callback'   => array('tl_files_rotate_image', 'rotateImage')
 );
 
 
@@ -64,6 +65,8 @@ class tl_files_rotate_image extends Backend
             }
         }
 
-        return $isImage==true ? '<a href="' . $this->addToUrl($href . '&amp;id=' . $row['id']) . '" title="' . specialchars($title, false, true) . '"' . $attributes . '>' . Image::getHtml($icon, $label) . '</a> ' : Image::getHtml(preg_replace('/\.png$/i', '_.png', $icon)) . ' ';
+        return $isImage == true ? '<a href="' . $this->addToUrl($href . '&amp;id=' . $row['id']) . '" title="' . specialchars($title,
+                false, true) . '"' . $attributes . '>' . Image::getHtml($icon,
+                $label) . '</a> ' : Image::getHtml(preg_replace('/\.png$/i', '_.png', $icon)) . ' ';
     }
 }
