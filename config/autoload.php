@@ -16,5 +16,5 @@
  */
 ClassLoader::addClasses(array
 (
-	'MCupic\RotateImage' => 'system/modules/mcupic_rotate_image/classes/RotateImage.php',
+	'MCupic\RotateImage' => 'system/modules/rotate_image/classes/RotateImage.php',
 ));

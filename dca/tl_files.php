@@ -15,7 +15,7 @@
 $GLOBALS['TL_DCA']['tl_files']['list']['operations']['rotateImage'] = array(
     'label' => &$GLOBALS['TL_LANG']['tl_files']['rotateImage'],
     'href' => 'key=rotate_image',
-    'icon' => 'system/modules/mcupic_rotate_image/assets/images/arrow_rotate_clockwise.png',
+    'icon' => 'system/modules/rotate_image/assets/images/arrow_rotate_clockwise.png',
     'attributes'          => 'onclick="Backend.getScrollOffset()"',
     'button_callback' => array('tl_files_rotate_image', 'rotateImage')
 );
