@@ -32,33 +32,35 @@ class RotateImage extends \Backend
      */
     public function rotateImage()
     {
-        $src = TL_ROOT . '/' . \Input::get('id');
+        $angle = 270;
+        $src = html_entity_decode(\Input::get('id'));
 
-        if (!is_file($src))
+        if (!file_exists(TL_ROOT . '/' . $src))
         {
-            return false;
+            \Message::addError(sprintf('File "%s" not found.', $src));
+            $this->redirect($this->getReferer());
         }
 
-        $objFile = new \File(\Input::get('id'));
+        $objFile = new \File($src);
         if (!$objFile->isGdImage)
         {
-            return false;
+            \Message::addError(sprintf('File "%s" could not be rotated because it is not an image.', $src));
+            $this->redirect($this->getReferer());
         }
-
-        $angle = 270;
 
         if (!function_exists('imagerotate'))
         {
-            return false;
+            \Message::addError(sprintf('PHP function "%s" is not installed.', 'imagerotate'));
+            $this->redirect($this->getReferer());
         }
 
-        $source = imagecreatefromjpeg($src);
+        $source = imagecreatefromjpeg(TL_ROOT . '/' . $src);
 
         //rotate
         $imgTmp = imagerotate($source, $angle, 0);
 
         // Output
-        imagejpeg($imgTmp, $src);
+        imagejpeg($imgTmp, TL_ROOT . '/' . $src);
         imagedestroy($source);
 
         $this->redirect($this->getReferer());
