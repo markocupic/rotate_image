@@ -31,7 +31,7 @@
     "extra":{
         "contao":{
             "sources":{
-                "":"system/modules/rotate_image"
+                "system/modules/rotate_image":"system/modules/rotate_image"
             }
         }
     }
