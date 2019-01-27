@@ -3,7 +3,7 @@
     "description":"Backend extension for the Contao Open Source CMS",
     "keywords":["contao", "rotate", "image", "rotate image", "Bild drehen", "drehen", "Bild", "rotate_image", "filemanager", "Dateiverwaltung", "Backend"],
     "type":"contao-module",
-    "license":"LGPL-3.0+",
+    "license":"MIT",
     "authors":[
         {
             "name":"Marko Cupic",
@@ -19,7 +19,6 @@
     },
     "require":{
         "contao/core-bundle":"~3.2 || ~4.4",
-        "contao-community-alliance/composer-plugin":"~2.4 || ~3.0"
     },
     "replace": {
         "contao-legacy/rotate_image":"self.version"
