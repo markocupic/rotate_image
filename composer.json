@@ -18,7 +18,7 @@
         "forum":"https://community.contao.org/de/"
     },
     "require":{
-        "contao/core-bundle":"~3.2 || ~4.4",
+        "contao/core-bundle":"~3.2 || ~4.4"
     },
     "replace": {
         "contao-legacy/rotate_image":"self.version"
