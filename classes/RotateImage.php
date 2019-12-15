@@ -16,7 +16,6 @@
 
 namespace Markocupic;
 
-
 /**
  * Provide methods to rotate Images.
  *
@@ -25,10 +24,9 @@ namespace Markocupic;
 class RotateImage extends \Backend
 {
 
-
     /**
      * Rotate an image clockwise by 90°
-     * @return bool
+     * @throws \ImagickException
      */
     public function rotateImage()
     {
@@ -48,23 +46,33 @@ class RotateImage extends \Backend
             $this->redirect($this->getReferer());
         }
 
-        if (!function_exists('imagerotate'))
+        if (class_exists('Imagick') && class_exists('ImagickPixel'))
         {
-            \Message::addError(sprintf('PHP function "%s" is not installed.', 'imagerotate'));
+            $imagick = new \Imagick();
+            $imagick->readImage(TL_ROOT . '/' . $src);
+            $imagick->rotateImage(new \ImagickPixel('none'), $angle);
+            $imagick->writeImage(TL_ROOT . '/' . $src);
+            $imagick->clear();
+            $imagick->destroy();
             $this->redirect($this->getReferer());
         }
+        elseif (function_exists('imagerotate'))
+        {
+            $source = imagecreatefromjpeg(TL_ROOT . '/' . $src);
 
-        $source = imagecreatefromjpeg(TL_ROOT . '/' . $src);
+            //rotate
+            $imgTmp = imagerotate($source, $angle, 0);
 
-        //rotate
-        $imgTmp = imagerotate($source, $angle, 0);
+            // Output
+            imagejpeg($imgTmp, TL_ROOT . '/' . $src);
 
-        // Output
-        imagejpeg($imgTmp, TL_ROOT . '/' . $src);
-        imagedestroy($source);
-
+            imagedestroy($source);
+        }
+        else
+        {
+            Message::addError(sprintf('Please install class "%s" or php function "%s" for rotating images.', 'Imagick', 'imagerotate'));
+        }
         $this->redirect($this->getReferer());
-
     }
 
 }
