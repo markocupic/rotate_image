@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Rotate image backend plugin for the Contao file manager
+ * Rotate image: Backend plugin for the Contao file manager
  * Copyright (c) 2008-20 Marko Cupic
  * @package rotate_image
  * @author Marko Cupic m.cupic@gmx.ch, 2020
