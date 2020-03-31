@@ -8,6 +8,5 @@
  * @link https://github.com/markocupic/rotate_image
  */
 
-$GLOBALS['TL_LANG']['tl_files']['rotateImage']['0'] = "Bild um 90° drehen.";
-$GLOBALS['TL_LANG']['tl_files']['rotateImage']['1'] = "Bild um 90° drehen.";
+$GLOBALS['TL_LANG']['tl_files']['rotateImage'] = ["Bild um 90° drehen.", "Bild um 90° drehen."];
 

@@ -10,11 +10,17 @@
 
 namespace Markocupic;
 
+use Contao\Backend;
+use Contao\Controller;
+use Contao\File;
+use Contao\Input;
+use Contao\Message;
+
 /**
  * Class RotateImage
  * @package Markocupic
  */
-class RotateImage extends \Backend
+class RotateImage extends Backend
 {
 
     /**
@@ -23,18 +29,19 @@ class RotateImage extends \Backend
      */
     public function rotateImage()
     {
-        $src = html_entity_decode(\Input::get('id'));
+        $src = html_entity_decode(Input::get('id'));
 
         if (!file_exists(TL_ROOT . '/' . $src))
         {
-            \Message::addError(sprintf('File "%s" not found.', $src));
-            $this->redirect($this->getReferer());
+            Message::addError(sprintf('File "%s" not found.', $src));
+            Controller::redirect($this->getReferer());
         }
-        $objFile = new \File($src);
+
+        $objFile = new File($src);
         if (!$objFile->isGdImage)
         {
-            \Message::addError(sprintf('File "%s" could not be rotated because it is not an image.', $src));
-            $this->redirect($this->getReferer());
+            Message::addError(sprintf('File "%s" could not be rotated because it is not an image.', $src));
+            Controller::redirect($this->getReferer());
         }
 
         if (class_exists('Imagick') && class_exists('ImagickPixel'))
@@ -46,7 +53,7 @@ class RotateImage extends \Backend
             $imagick->writeImage(TL_ROOT . '/' . $src);
             $imagick->clear();
             $imagick->destroy();
-            $this->redirect($this->getReferer());
+            Controller::redirect($this->getReferer());
         }
         elseif (function_exists('imagerotate'))
         {
@@ -65,7 +72,7 @@ class RotateImage extends \Backend
         {
             Message::addError(sprintf('Please install class "%s" or php function "%s" for rotating images.', 'Imagick', 'imagerotate'));
         }
-        $this->redirect($this->getReferer());
+        Controller::redirect($this->getReferer());
     }
 
 }

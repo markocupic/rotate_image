@@ -9,7 +9,7 @@
  */
 
 /**
- * File management
+ * Operations
  */
 $GLOBALS['TL_DCA']['tl_files']['list']['operations']['rotateImage'] = [
     'label'           => &$GLOBALS['TL_LANG']['tl_files']['rotateImage'],
@@ -35,16 +35,14 @@ class tl_files_rotate_image extends \Contao\Backend
     }
 
     /**
-     * Return the edit file button
-     *
-     * @param array $row
-     * @param string $href
-     * @param string $label
-     * @param string $title
-     * @param string $icon
-     * @param string $attributes
-     *
+     * @param $row
+     * @param $href
+     * @param $label
+     * @param $title
+     * @param $icon
+     * @param $attributes
      * @return string
+     * @throws Exception
      */
     public function rotateImage($row, $href, $label, $title, $icon, $attributes)
     {
