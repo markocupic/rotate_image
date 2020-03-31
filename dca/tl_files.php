@@ -1,33 +1,28 @@
 <?php
 
 /**
- * Contao Open Source CMS
- *
- * Copyright (c) 2005-2015 Leo Feyer
- *
- * @license LGPL-3.0+
+ * Resource rotate image backend helper for Contao CMS
+ * Copyright (c) 2008-20 Marko Cupic
+ * @package rotate_image
+ * @author Marko Cupic m.cupic@gmx.ch, 2020
+ * @link https://github.com/markocupic/rotate_image
  */
-
 
 /**
  * File management
  */
-$GLOBALS['TL_DCA']['tl_files']['list']['operations']['rotateImage'] = array
-(
-    'label'             => &$GLOBALS['TL_LANG']['tl_files']['rotateImage'],
-    'href'              => 'key=rotate_image',
-    'icon'              => 'system/modules/rotate_image/assets/images/arrow_rotate_clockwise.png',
-    'attributes'        => 'onclick="Backend.getScrollOffset()"',
-    'button_callback'   => array('tl_files_rotate_image', 'rotateImage')
-);
-
+$GLOBALS['TL_DCA']['tl_files']['list']['operations']['rotateImage'] = [
+    'label'           => &$GLOBALS['TL_LANG']['tl_files']['rotateImage'],
+    'href'            => 'key=rotate_image',
+    'icon'            => 'system/modules/rotate_image/assets/images/arrow_rotate_clockwise.png',
+    'attributes'      => 'onclick="Backend.getScrollOffset()"',
+    'button_callback' => ['tl_files_rotate_image', 'rotateImage']
+];
 
 /**
- * Provide miscellaneous methods that are used by the data configuration array.
- *
- * @author Marko Cupic <https://github.com/markocupic>
+ * Class tl_files_rotate_image
  */
-class tl_files_rotate_image extends Backend
+class tl_files_rotate_image extends \Contao\Backend
 {
 
     /**
@@ -38,7 +33,6 @@ class tl_files_rotate_image extends Backend
         parent::__construct();
         $this->import('BackendUser', 'User');
     }
-
 
     /**
      * Return the edit file button
@@ -58,7 +52,7 @@ class tl_files_rotate_image extends Backend
         $strDecoded = rawurldecode($row['id']);
         if (is_file(TL_ROOT . '/' . $strDecoded))
         {
-            $objFile = new File($strDecoded, true);
+            $objFile = new \Contao\File($strDecoded, true);
             if ($objFile->isGdImage)
             {
                 $isImage = true;
@@ -66,7 +60,7 @@ class tl_files_rotate_image extends Backend
         }
 
         return $isImage == true ? '<a href="' . $this->addToUrl($href . '&amp;id=' . $row['id']) . '" title="' . specialchars($title,
-                false, true) . '"' . $attributes . '>' . Image::getHtml($icon,
-                $label) . '</a> ' : Image::getHtml(preg_replace('/\.png$/i', '_.png', $icon)) . ' ';
+                false, true) . '"' . $attributes . '>' . \Contao\Image::getHtml($icon,
+                $label) . '</a> ' : \Contao\Image::getHtml(preg_replace('/\.png$/i', '_.png', $icon)) . ' ';
     }
 }

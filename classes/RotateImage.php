@@ -1,25 +1,18 @@
 <?php
 
 /**
- * Contao Open Source CMS
- *
- * Copyright (C) 2005-2012 Leo Feyer
- *
- * @package Gallery Creator
- * @link    http://www.contao.org
- * @license http://www.gnu.org/licenses/lgpl-3.0.html LGPL
- */
-
-/**
- * Run in a custom namespace, so the class can be replaced
+ * Resource rotate image backend helper for Contao CMS
+ * Copyright (c) 2008-20 Marko Cupic
+ * @package rotate_image
+ * @author Marko Cupic m.cupic@gmx.ch, 2020
+ * @link https://github.com/markocupic/rotate_image
  */
 
 namespace Markocupic;
 
 /**
- * Provide methods to rotate Images.
- *
- * @author Marko Cupic <https://github.com/markocupic>
+ * Class RotateImage
+ * @package Markocupic
  */
 class RotateImage extends \Backend
 {
@@ -30,7 +23,6 @@ class RotateImage extends \Backend
      */
     public function rotateImage()
     {
-        $angle = 270;
         $src = html_entity_decode(\Input::get('id'));
 
         if (!file_exists(TL_ROOT . '/' . $src))
@@ -38,7 +30,6 @@ class RotateImage extends \Backend
             \Message::addError(sprintf('File "%s" not found.', $src));
             $this->redirect($this->getReferer());
         }
-
         $objFile = new \File($src);
         if (!$objFile->isGdImage)
         {
@@ -48,6 +39,7 @@ class RotateImage extends \Backend
 
         if (class_exists('Imagick') && class_exists('ImagickPixel'))
         {
+            $angle = 90;
             $imagick = new \Imagick();
             $imagick->readImage(TL_ROOT . '/' . $src);
             $imagick->rotateImage(new \ImagickPixel('none'), $angle);
@@ -58,6 +50,7 @@ class RotateImage extends \Backend
         }
         elseif (function_exists('imagerotate'))
         {
+            $angle = 270;
             $source = imagecreatefromjpeg(TL_ROOT . '/' . $src);
 
             //rotate

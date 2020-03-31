@@ -1,13 +1,11 @@
 <?php
 
 /**
- * Contao Open Source CMS
- * 
- * Copyright (C) 2005-2013 Leo Feyer
- * 
- * @package Es_resetpassword
- * @link    https://contao.org
- * @license http://www.gnu.org/licenses/lgpl-3.0.html LGPL
+ * Resource rotate image backend helper for Contao CMS
+ * Copyright (c) 2008-20 Marko Cupic
+ * @package rotate_image
+ * @author Marko Cupic m.cupic@gmx.ch, 2020
+ * @link https://github.com/markocupic/rotate_image
  */
 
 
