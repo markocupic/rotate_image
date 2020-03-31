@@ -23,9 +23,6 @@
     "replace": {
         "contao-legacy/rotate_image":"self.version"
     },
-    "autoload":{
-        "classmap":[""]
-    },
     "extra":{
         "contao":{
             "sources":{
