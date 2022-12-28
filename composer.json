@@ -1,46 +1,56 @@
 {
-  "name": "markocupic/rotate_image",
-  "description": "Backend extension for the Contao Open Source CMS",
-  "keywords": [
-    "contao",
-    "rotate",
-    "image",
-    "rotate image",
-    "Bild drehen",
-    "drehen",
-    "Bild",
-    "rotate_image",
-    "filemanager",
-    "Dateiverwaltung",
-    "Backend"
-  ],
-  "type": "contao-module",
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Marko Cupic",
-      "email": "m.cupic@gmx.ch",
-      "homepage": "https://github.com/markocupic",
-      "role": "Developer"
+    "name": "markocupic/rotate_image",
+    "description": "Backend extension for the Contao Open Source CMS",
+    "keywords": [
+        "contao",
+        "file manager",
+        "rotate",
+        "image"
+    ],
+    "type": "contao-module",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Marko Cupic",
+            "email": "m.cupic@gmx.ch",
+            "homepage": "https://github.com/markocupic",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/markocupic/rotate_image/issues",
+        "source": "https://github.com/markocupic/rotate_image",
+        "forum": "https://community.contao.org/de/"
+    },
+    "require": {
+        "php": "^8.1",
+        "contao/core-bundle": "^4.13 || ^5.0"
+    },
+    "require-dev": {
+        "contao/manager-plugin": "^2.3.1",
+        "contao/test-case": "^4.5",
+        "phpunit/phpunit": "^9.3",
+        "symfony/http-client": "5.4.*",
+        "symfony/phpunit-bridge": "^5.4",
+        "contao/easy-coding-standard": "^5.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Markocupic\\RotateImage\\": "src/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true,
+            "contao-components/installer": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "contao/manager-plugin": true
+        }
+    },
+    "replace": {
+        "contao-legacy/rotate_image": "self.version"
+    },
+    "extra": {
+        "contao-manager-plugin": "Markocupic\\RotateImage\\ContaoManager\\Plugin"
     }
-  ],
-  "support": {
-    "issues": "https://github.com/markocupic/rotate_image/issues",
-    "source": "https://github.com/markocupic/rotate_image",
-    "forum": "https://community.contao.org/de/"
-  },
-  "require": {
-    "contao/core-bundle": "~3.2 || ~4.4",
-    "contao-community-alliance/composer-plugin": "~2.4 || ~3.0"
-  },
-  "replace": {
-    "contao-legacy/rotate_image": "self.version"
-  },
-  "extra": {
-    "contao": {
-      "sources": {
-        "": "system/modules/rotate_image"
-      }
-    }
-  }
 }
