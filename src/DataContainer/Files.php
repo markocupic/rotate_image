@@ -20,16 +20,19 @@ use Contao\File;
 use Contao\Image;
 use Contao\StringUtil;
 use Markocupic\RotateImage\RotateImage;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class Files extends Backend
 {
     private RotateImage $rotateImage;
+    private RequestStack $requestStack;
     private string $projectDir;
 
-    public function __construct(RotateImage $rotateImage, string $projectDir)
+    public function __construct(RotateImage $rotateImage, RequestStack $requestStack, string $projectDir)
     {
         $this->rotateImage = $rotateImage;
         $this->projectDir = $projectDir;
+        $this->requestStack = $requestStack;
 
         parent::__construct();
     }
@@ -48,13 +51,14 @@ class Files extends Backend
 
             if ($objFile->isGdImage) {
                 $isGdImage = true;
+                $request = $this->requestStack->getCurrentRequest();
 
-                if ('rotate_image' === $this->Input->get('key')) {
+                if ('rotate_image' === $request->query->get('key')) {
                     $this->rotateImage->rotateImage($objFile);
                 }
             }
         }
 
-        return $isGdImage ? '<a href="'.$this->addToUrl($href.'&amp;id='.$row['id']).'" title="'.StringUtil::specialchars($title).'"'.$attributes.'>'.Image::getHtml($icon, $label).'</a> ' : Image::getHtml(preg_replace('/\.svg$/i', '_.svg', $icon)).' ';
+        return $isGdImage ? '<a href="' . StringUtil::specialcharsUrl($href) . '" title="' . StringUtil::specialchars($title) . '" target="_blank">' . Image::getHtml($icon, $label) . '</a> ' : Image::getHtml(preg_replace('/\.svg$/i', '_.svg', $icon)) . ' ';
     }
 }
