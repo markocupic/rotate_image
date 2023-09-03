@@ -53,7 +53,7 @@ class Files extends Backend
                 $isGdImage = true;
                 $request = $this->requestStack->getCurrentRequest();
 
-                if ('rotate_image' === $request->query->get('key')) {
+                if ('rotate_image' === $request->query->get('key') && $strDecoded === $request->query->get('id')) {
                     $this->rotateImage->rotateImage($objFile);
                 }
             }
