@@ -2,10 +2,14 @@ services:
     _defaults:
         autowire: true
         autoconfigure: true
-        public: true
+        public: false
         bind:
             $projectDir: '%kernel.project_dir%'
 
     Markocupic\RotateImage\:
         resource: ../src/
-        exclude: ../src/{DependencyInjection}
+        exclude:
+            - ../src/ContaoManager
+            - ../src/DependencyInjection
+            - ../src/Exception
+            - ../src/MarkocupicRotateImage.php
