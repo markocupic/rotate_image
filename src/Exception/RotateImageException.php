@@ -12,11 +12,8 @@ declare(strict_types=1);
  * @link https://github.com/markocupic/rotate_image
  */
 
-/*
- * Operations
- */
-$GLOBALS['TL_DCA']['tl_files']['list']['operations']['rotate_image'] = [
-    'href' => 'key=rotate_image',
-    'icon' => 'bundles/markocupicrotateimage/images/rotate.svg',
-    'attributes' => 'data-action="contao--scroll-offset#store"',
-];
+namespace Markocupic\RotateImage\Exception;
+
+class RotateImageException extends \RuntimeException
+{
+}

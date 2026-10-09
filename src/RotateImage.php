@@ -14,18 +14,17 @@ declare(strict_types=1);
 
 namespace Markocupic\RotateImage;
 
-use Contao\Controller;
-use Contao\CoreBundle\Framework\ContaoFramework;
-use Contao\File;
-use Contao\Message;
-use Contao\System;
+use Markocupic\RotateImage\Exception\RotateImageException;
 use Symfony\Component\Filesystem\Path;
 use Symfony\Component\Mime\MimeTypes;
 
 class RotateImage
 {
-    // Same formats as Contao\File::isGdImage, but checked by the file content (MIME type) instead of the extension
-    private const array IMAGE_MIME_TYPES = [
+    /**
+     * Same formats as Contao\File::isGdImage, but checked by the file content (MIME
+     * type) instead of the extension.
+     */
+    private const IMAGE_MIME_TYPES = [
         'image/gif',
         'image/jpeg',
         'image/png',
@@ -35,38 +34,28 @@ class RotateImage
         'image/jxl',
     ];
 
-
-    public function __construct(
-        private readonly ContaoFramework $framework,
-        private readonly string          $projectDir
-    )
+    public function __construct(private readonly string $projectDir)
     {
     }
 
     /**
-     * Rotate an image clockwise by 90°.
+     * Rotates an image clockwise by the given angle (default: 90°).
      *
-     * @throws \ImagickException
-     * @throws \Exception
+     * @param string $path Absolute path or path relative to the project directory
+     *
+     * @throws RotateImageException
      */
-    public function rotateImage(File|string $file, int $angle = 90): void
+    public function rotateImage(string $path, int $angle = 90): void
     {
-        $this->framework->initialize();
-
-        $path = $file instanceof File ? Path::join($this->projectDir, $file->path) : $file;
+        $path = Path::makeAbsolute($path, $this->projectDir);
         $relativePath = Path::makeRelative($path, $this->projectDir);
-        $message = $this->framework->getAdapter(Message::class);
-        $controller = $this->framework->getAdapter(Controller::class);
-        $system = $this->framework->getAdapter(System::class);
 
-        if (!file_exists($path)) {
-            $message->addError(sprintf('File "%s" not found.', $relativePath));
-            $controller->redirect($system->getReferer());
+        if (!is_file($path)) {
+            throw new RotateImageException(\sprintf('File "%s" not found.', $relativePath));
         }
 
         if (!$this->isImage($path)) {
-            $message->addError(sprintf('File "%s" could not be rotated because it is not an image.', $relativePath));
-            $controller->redirect($system->getReferer());
+            throw new RotateImageException(\sprintf('File "%s" could not be rotated because it is not an image.', $relativePath));
         }
 
         try {
@@ -78,15 +67,19 @@ class RotateImage
             } finally {
                 $imagick->clear();
             }
-        } catch (\ImagickException) {
-            $message->addError(sprintf('Could not rotate the image "%s".', $relativePath));
+        } catch (\ImagickException $e) {
+            throw new RotateImageException(\sprintf('Could not rotate the image "%s".', $relativePath), 0, $e);
         }
-
-        $controller->redirect($system->getReferer());
     }
 
-    private function isImage(string $path): bool
+    public function isImage(string $path): bool
     {
+        $path = Path::makeAbsolute($path, $this->projectDir);
+
+        if (!is_file($path)) {
+            return false;
+        }
+
         return \in_array(MimeTypes::getDefault()->guessMimeType($path), self::IMAGE_MIME_TYPES, true);
     }
 }
