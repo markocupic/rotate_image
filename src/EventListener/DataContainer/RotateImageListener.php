@@ -52,8 +52,8 @@ class RotateImageListener
     }
 
     /**
-     * Disables the operation for files which are not images or which the user
-     * is not allowed to edit, and adds a CSRF token to the URL.
+     * Disables the operation for files which are not images or which the user is not
+     * allowed to edit, and adds a CSRF token to the URL.
      */
     #[AsCallback(table: 'tl_files', target: 'list.operations.rotate_image.button')]
     public function onButtonCallback(DataContainerOperation $operation): void
