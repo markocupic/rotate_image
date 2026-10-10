@@ -105,14 +105,14 @@ class RotateImageListenerTest extends TestCase
             'rotate_image',
             ['href' => 'key=rotate_image', 'icon' => 'bundles/markocupicrotateimage/images/rotate.svg'],
             ['id' => rawurlencode($path)],
-            $this->createMock(DataContainer::class),
+            $this->createStub(DataContainer::class),
         );
     }
 
     private function getListener(bool $isImage = true, bool $granted = true, RotateImage|null $rotateImage = null, Request|null $request = null): RotateImageListener
     {
         if (null === $rotateImage) {
-            $rotateImage = $this->createMock(RotateImage::class);
+            $rotateImage = $this->createStub(RotateImage::class);
             $rotateImage
                 ->method('isImage')
                 ->willReturn($isImage)
@@ -125,13 +125,13 @@ class RotateImageListenerTest extends TestCase
             $requestStack->push($request);
         }
 
-        $authorizationChecker = $this->createMock(AuthorizationCheckerInterface::class);
+        $authorizationChecker = $this->createStub(AuthorizationCheckerInterface::class);
         $authorizationChecker
             ->method('isGranted')
             ->willReturn($granted)
         ;
 
-        $tokenManager = $this->createMock(CsrfTokenManagerInterface::class);
+        $tokenManager = $this->createStub(CsrfTokenManagerInterface::class);
         $tokenManager
             ->method('getToken')
             ->willReturn(new CsrfToken('contao_csrf_token', 'token-value'))
@@ -143,7 +143,7 @@ class RotateImageListenerTest extends TestCase
         ;
 
         return new RotateImageListener(
-            $this->createMock(ContaoFramework::class),
+            $this->createStub(ContaoFramework::class),
             $rotateImage,
             $requestStack,
             $authorizationChecker,
