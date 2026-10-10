@@ -21,8 +21,8 @@ use Symfony\Component\Mime\MimeTypes;
 class RotateImage
 {
     /**
-     * Same formats as Contao\File::isGdImage, but checked by the file content (MIME
-     * type) instead of the extension.
+     * Same formats as Contao\File::isGdImage, but checked by the file content
+     * (MIME type) instead of the extension.
      */
     private const IMAGE_MIME_TYPES = [
         'image/gif',
